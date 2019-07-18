@@ -5,53 +5,29 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/**
- * Immutable model class for a Task.
- */
-@Entity(tableName = "fund")
-public final class Fund {
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "entryid")
-    private String id;
 
-    private String title;
+public class Fund {
 
-    private String fundName;
+    @SerializedName("screen")
+    @Expose
+    private Screen screen;
 
-    private String WhatIs;
-
-    public String getTitle() {
-        return title;
+    public Screen getScreen() {
+        return screen;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getFundName() {
-        return fundName;
-    }
-
-    public void setFundName(String fundName) {
-        this.fundName = fundName;
-    }
-
-    public String getWhatIs() {
-        return WhatIs;
-    }
-
-    public void setWhatIs(String whatIs) {
-        WhatIs = whatIs;
+    public void setScreen(Screen screen) {
+        this.screen = screen;
     }
 
     @NonNull
-    public String getId() {
-        return id;
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 
-    public void setId(@NonNull String id) {
-        this.id = id;
-    }
 }

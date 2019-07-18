@@ -92,7 +92,7 @@ public class FundFragment extends Fragment implements FundContract.View{
 
     @Override
     public void showFund(Fund fund) {
-        tv_title.setText(fund.getTitle());
+       // tv_title.setText(fund.getTitle());
         tv_fund_name.setText("rodou porra");
     }
 

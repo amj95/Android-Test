@@ -173,7 +173,7 @@ public class FundRepository implements FundDataSource {
         }
         mCachedFunds.clear();
         for (Fund fund : funds) {
-            mCachedFunds.put(fund.getId(), fund);
+            //mCachedFunds.put(fund.getId(), fund);
         }
         mCacheIsDirty = false;
     }
