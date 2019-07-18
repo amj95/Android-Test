@@ -27,13 +27,13 @@ public class FundInfoLineAdapter extends RecyclerView.Adapter<FundInfoLineHolder
         entitiesArray = Info;
     }
 
-    public void replaceData(List<Info> info) {
-        setList(info);
+    public void replaceData(List<Info> data) {
+        setList(data);
         notifyDataSetChanged();
     }
 
-    private void setList(List<Info> tasks) {
-        entitiesArray = checkNotNull(tasks);
+    private void setList(List<Info> data) {
+        entitiesArray = checkNotNull(data);
     }
 
     @Override
