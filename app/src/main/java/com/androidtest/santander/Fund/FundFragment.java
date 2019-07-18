@@ -48,7 +48,6 @@ public class FundFragment extends Fragment implements FundContract.View{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //  mListAdapter = new TasksAdapter(new ArrayList<Task>(0), mItemListener);
     }
 
     @Nullable
@@ -57,33 +56,10 @@ public class FundFragment extends Fragment implements FundContract.View{
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.investimento_frag, container, false);
 
-
-        // Set up  no tasks view
         tv_title = (TextView) root.findViewById(R.id.tv_title);
         tv_fund_name = (TextView) root.findViewById(R.id.tv_fund_name);
         tv_what_is = (TextView) root.findViewById(R.id.tv_what_is);
         tv_definition = (TextView) root.findViewById(R.id.tv_definition);
-
-
-//        // Set up progress indicator
-//        final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
-//                (ScrollChildSwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
-//        swipeRefreshLayout.setColorSchemeColors(
-//                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
-//                ContextCompat.getColor(getActivity(), R.color.colorAccent),
-//                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
-//        );
-//        // Set the scrolling view in the custom SwipeRefreshLayout.
-//        swipeRefreshLayout.setScrollUpChild(listView);
-//
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                mPresenter.loadTasks(false);
-//            }
-//        });
-//
-//        setHasOptionsMenu(true);
 
         mPresenter.loadFunds(false);
 
@@ -92,8 +68,10 @@ public class FundFragment extends Fragment implements FundContract.View{
 
     @Override
     public void showFund(Fund fund) {
-       // tv_title.setText(fund.getTitle());
-        tv_fund_name.setText("rodou porra");
+        tv_title.setText(fund.getScreen().getTitle());
+        tv_fund_name.setText(fund.getScreen().getFundName());
+        tv_what_is.setText(fund.getScreen().getWhatIs());
+        tv_definition.setText(fund.getScreen().getDefinition());
     }
 
     @Override
@@ -105,6 +83,4 @@ public class FundFragment extends Fragment implements FundContract.View{
     public boolean isActive() {
         return isAdded();
     }
-
-
 }

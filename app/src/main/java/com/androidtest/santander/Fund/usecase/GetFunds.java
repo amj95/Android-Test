@@ -28,9 +28,6 @@ public class GetFunds extends UseCase<GetFunds.RequestValues, GetFunds.ResponseV
 
     @Override
     protected void executeUseCase(final RequestValues values) {
-//        if (values.isForceUpdate()) {
-//            mFundRepository.refreshFunds();
-//        }
 
         mFundRepository.getFunds(new FundDataSource.LoadFundsCallback() {
             @Override

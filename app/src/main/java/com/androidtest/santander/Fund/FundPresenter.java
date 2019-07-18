@@ -66,6 +66,8 @@ public class FundPresenter implements FundContract.Presenter {
     }
 
     private void processTasks(List<Fund> funds) {
-        mFundView.showFund(funds.get(0));
+        if (!funds.isEmpty()) {
+            mFundView.showFund(funds.get(0));
+        }
     }
 }

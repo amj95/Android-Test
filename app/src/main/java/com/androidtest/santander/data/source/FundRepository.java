@@ -9,7 +9,6 @@ import com.androidtest.santander.Fund.model.Fund;
 import com.androidtest.santander.data.source.remote.FundRemoteDataSouce;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +18,6 @@ import static androidx.core.util.Preconditions.checkNotNull;
 
 /**
  * Concrete implementation to load funds from the data sources into a cache.
- * <p>
- * For simplicity, this implements a dumb synchronisation between locally persisted data and data
- * obtained from the server, by using the remote data source only if the local database doesn't
- * exist or is empty.
  */
 public class FundRepository implements FundDataSource {
 
@@ -91,8 +86,6 @@ public class FundRepository implements FundDataSource {
 
     }
 
-
-
     /**
      * Gets funds from local data source (sqlite) unless the table is new or empty. In that case it
      * uses the network data source. This is done to simplify the sample.
@@ -113,41 +106,6 @@ public class FundRepository implements FundDataSource {
             callback.onFundLoaded(cachedFund);
             return;
         }
-
-        // Load from server/persisted if needed.
-
-        // Is the fund in the local data source? If not, query the network.
-//        mFundsLocalDataSource.getFund(fundId, new GetFundCallback() {
-//            @Override
-//            public void onFundLoaded(Fund fund) {
-//                // Do in memory cache update to keep the app UI up to date
-//                if (mCachedFunds == null) {
-//                    mCachedFunds = new LinkedHashMap<>();
-//                }
-//                mCachedFunds.put(fund.getId(), fund);
-//                callback.onFundLoaded(fund);
-//            }
-//
-//            @Override
-//            public void onDataNotAvailable() {
-//                mFundsRemoteDataSource.getFund(fundId, new GetFundCallback() {
-//                    @Override
-//                    public void onFundLoaded(Fund fund) {
-//                        // Do in memory cache update to keep the app UI up to date
-//                        if (mCachedFunds == null) {
-//                            mCachedFunds = new LinkedHashMap<>();
-//                        }
-//                        mCachedFunds.put(fund.getId(), fund);
-//                        callback.onFundLoaded(fund);
-//                    }
-//
-//                    @Override
-//                    public void onDataNotAvailable() {
-//                        callback.onDataNotAvailable();
-//                    }
-//                });
-//            }
-//        });
     }
 
 
@@ -156,7 +114,6 @@ public class FundRepository implements FundDataSource {
             @Override
             public void onFundsLoaded(List<Fund> funds) {
                 refreshCache(funds);
-                //refreshLocalDataSource(funds);
                 callback.onFundsLoaded(new ArrayList<>(mCachedFunds.values()));
             }
 
@@ -173,7 +130,7 @@ public class FundRepository implements FundDataSource {
         }
         mCachedFunds.clear();
         for (Fund fund : funds) {
-            //mCachedFunds.put(fund.getId(), fund);
+            mCachedFunds.put(fund.getScreen().getFundName(), fund);
         }
         mCacheIsDirty = false;
     }

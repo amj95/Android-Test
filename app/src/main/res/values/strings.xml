@@ -3,4 +3,15 @@
     <string name="title_investimento">Investimento</string>
     <string name="title_contato">Contato</string>
     <string name="app_shared_prefs_key">appPrefs</string>
+    <string name="default_text">Default</string>
+    <string name="investimento">Investimento</string>
+    <string name="title_grau_risco">Grau de risco do investimento</string>
+    <string name="title_mais_info">Mais informações sobre o investimento</string>
+    <string name="title_fundo">Fundo</string>
+    <string name="title_cdi">CDI</string>
+
+    <string name="title_mes">No mês</string>
+    <string name="title_ano">No Ano</string>
+    <string name="title_12_mes">12 meses</string>
+    <string name="default_tax">0,0%</string>
 </resources>
