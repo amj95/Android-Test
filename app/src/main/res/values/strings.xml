@@ -14,4 +14,8 @@
     <string name="title_ano">No Ano</string>
     <string name="title_12_mes">12 meses</string>
     <string name="default_tax">0,0%</string>
+
+    <string name="baixar">Baixar</string>
+
+    <string name="investir">Investir</string>
 </resources>

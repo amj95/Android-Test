@@ -14,7 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidtest.santander.Fund.LineAdapter.FundDownInfoLineAdapter;
 import com.androidtest.santander.Fund.LineAdapter.FundInfoLineAdapter;
+import com.androidtest.santander.Fund.model.DownInfo;
 import com.androidtest.santander.Fund.model.Fund;
 import com.androidtest.santander.Fund.model.Info;
 import com.androidtest.santander.R;
@@ -27,14 +29,15 @@ public class FundFragment extends Fragment implements FundContract.View {
 
     private FundContract.Presenter mPresenter;
 
-    private FundInfoLineAdapter mListAdapter;
+    private FundInfoLineAdapter mListInfoAdapter;
+    private FundDownInfoLineAdapter mListDownInfoAdapter;
 
     private TextView tv_title, tv_fund_name, tv_what_is, tv_definition, tv_fund_mes, tv_fund_ano,
             tv_fund_12_mes, tv_cdi_mes, tv_cdi_ano, tv_cdi_12_mes;
 
     private ProgressBar pb_risk;
 
-    private RecyclerView rv_info;
+    private RecyclerView rv_info, rv_down_info;
 
 
     public FundFragment() {
@@ -64,7 +67,8 @@ public class FundFragment extends Fragment implements FundContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new FundInfoLineAdapter(new ArrayList<Info>(0));
+        mListInfoAdapter = new FundInfoLineAdapter(new ArrayList<Info>(0));
+        mListDownInfoAdapter = new FundDownInfoLineAdapter(new ArrayList<DownInfo>(0));
     }
 
     @Nullable
@@ -85,11 +89,16 @@ public class FundFragment extends Fragment implements FundContract.View {
         tv_cdi_ano = (TextView) root.findViewById(R.id.tv_cdi_ano);
         tv_cdi_12_mes = (TextView) root.findViewById(R.id.tv_cdi_12_mes);
         rv_info = (RecyclerView) root.findViewById(R.id.rv_info);
+        rv_down_info = (RecyclerView) root.findViewById(R.id.rv_down_info);
         pb_risk = (ProgressBar) root.findViewById(R.id.pb_risk);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv_info.setLayoutManager(layoutManager);
-        rv_info.setAdapter(mListAdapter);
+        rv_info.setAdapter(mListInfoAdapter);
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        rv_down_info.setLayoutManager(layoutManager);
+        rv_down_info.setAdapter(mListDownInfoAdapter);
 
         mPresenter.loadFunds(false);
 
@@ -112,7 +121,8 @@ public class FundFragment extends Fragment implements FundContract.View {
         tv_cdi_ano.setText(fund.getScreen().getMoreInfo().getYear().getCDI() + "%");
         tv_cdi_12_mes.setText(fund.getScreen().getMoreInfo().get12months().getCDI() + "%");
 
-        mListAdapter.replaceData(fund.getScreen().getInfo());
+        mListInfoAdapter.replaceData(fund.getScreen().getInfo());
+        mListDownInfoAdapter.replaceData(fund.getScreen().getDownInfo());
 
     }
 
