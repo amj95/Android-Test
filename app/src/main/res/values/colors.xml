@@ -6,4 +6,9 @@
     <color name="textAccent">#CCCCCC</color>
 
     <color name="textColor">#FFFFFF</color>
+
+    <color name="textTitle">#BCBCBC</color>
+    <color name="textData">#4F4F4F</color>
+    <color name="title_fund">#343434</color>
+
 </resources>

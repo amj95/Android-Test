@@ -5,21 +5,37 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidtest.santander.Fund.LineAdapter.FundInfoLineAdapter;
 import com.androidtest.santander.Fund.model.Fund;
+import com.androidtest.santander.Fund.model.Info;
 import com.androidtest.santander.R;
+
+import java.util.ArrayList;
+
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
-public class FundFragment extends Fragment implements FundContract.View{
+public class FundFragment extends Fragment implements FundContract.View {
 
     private FundContract.Presenter mPresenter;
 
-    private TextView tv_title, tv_fund_name, tv_what_is, tv_definition;
+    private FundInfoLineAdapter mListAdapter;
+
+    private TextView tv_title, tv_fund_name, tv_what_is, tv_definition, tv_fund_mes, tv_fund_ano,
+            tv_fund_12_mes, tv_cdi_mes, tv_cdi_ano, tv_cdi_12_mes;
+
+    private ProgressBar pb_risk;
+
+    private RecyclerView rv_info;
+
 
     public FundFragment() {
         // Requires empty public constructor
@@ -48,6 +64,7 @@ public class FundFragment extends Fragment implements FundContract.View{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mListAdapter = new FundInfoLineAdapter(new ArrayList<Info>(0));
     }
 
     @Nullable
@@ -61,6 +78,19 @@ public class FundFragment extends Fragment implements FundContract.View{
         tv_what_is = (TextView) root.findViewById(R.id.tv_what_is);
         tv_definition = (TextView) root.findViewById(R.id.tv_definition);
 
+        tv_fund_mes = (TextView) root.findViewById(R.id.tv_fund_mes);
+        tv_fund_ano = (TextView) root.findViewById(R.id.tv_fund_ano);
+        tv_fund_12_mes = (TextView) root.findViewById(R.id.tv_fund_12_mes);
+        tv_cdi_mes = (TextView) root.findViewById(R.id.tv_cdi_mes);
+        tv_cdi_ano = (TextView) root.findViewById(R.id.tv_cdi_ano);
+        tv_cdi_12_mes = (TextView) root.findViewById(R.id.tv_cdi_12_mes);
+        rv_info = (RecyclerView) root.findViewById(R.id.rv_info);
+        pb_risk = (ProgressBar) root.findViewById(R.id.pb_risk);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        rv_info.setLayoutManager(layoutManager);
+        rv_info.setAdapter(mListAdapter);
+
         mPresenter.loadFunds(false);
 
         return root;
@@ -72,6 +102,18 @@ public class FundFragment extends Fragment implements FundContract.View{
         tv_fund_name.setText(fund.getScreen().getFundName());
         tv_what_is.setText(fund.getScreen().getWhatIs());
         tv_definition.setText(fund.getScreen().getDefinition());
+
+        pb_risk.setProgress(fund.getScreen().getRisk() * 20);
+
+        tv_fund_mes.setText(fund.getScreen().getMoreInfo().getMonth().getFund() + "%");
+        tv_fund_ano.setText(fund.getScreen().getMoreInfo().getYear().getFund() + "%");
+        tv_fund_12_mes.setText(fund.getScreen().getMoreInfo().get12months().getFund() + "%");
+        tv_cdi_mes.setText(fund.getScreen().getMoreInfo().getMonth().getCDI() + "%");
+        tv_cdi_ano.setText(fund.getScreen().getMoreInfo().getYear().getCDI() + "%");
+        tv_cdi_12_mes.setText(fund.getScreen().getMoreInfo().get12months().getCDI() + "%");
+
+        mListAdapter.replaceData(fund.getScreen().getInfo());
+
     }
 
     @Override
@@ -83,4 +125,5 @@ public class FundFragment extends Fragment implements FundContract.View{
     public boolean isActive() {
         return isAdded();
     }
+
 }
