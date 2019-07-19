@@ -40,6 +40,7 @@ public class FundPresenter implements FundContract.Presenter {
 
     @Override
     public void loadFunds(boolean forceUpdate) {
+        mFundView.setLoadingIndicator();
         final GetFunds.RequestValues requestValues = new GetFunds.RequestValues(forceUpdate);
         mUseCaseHandler.execute(mGetFunds, requestValues,
                 new UseCase.UseCaseCallback<GetFunds.ResponseValue>() {
@@ -55,7 +56,7 @@ public class FundPresenter implements FundContract.Presenter {
 
                     @Override
                     public void onError() {
-                        mFundView.showLoadingFundError();
+                        mFundView.showLoadingError();
                     }
                 });
     }

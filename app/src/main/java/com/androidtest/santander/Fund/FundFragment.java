@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ public class FundFragment extends Fragment implements FundContract.View {
     private FundContract.Presenter mPresenter;
 
     private FundInfoLineAdapter mListInfoAdapter;
+
     private FundDownInfoLineAdapter mListDownInfoAdapter;
 
     private TextView tv_title, tv_fund_name, tv_what_is, tv_definition, tv_fund_mes, tv_fund_ano,
@@ -39,6 +41,9 @@ public class FundFragment extends Fragment implements FundContract.View {
 
     private RecyclerView rv_info, rv_down_info;
 
+    private ConstraintLayout cl_loading, cl_data;
+
+    private ProgressBar pb_loading;
 
     public FundFragment() {
         // Requires empty public constructor
@@ -92,6 +97,11 @@ public class FundFragment extends Fragment implements FundContract.View {
         rv_down_info = (RecyclerView) root.findViewById(R.id.rv_down_info);
         pb_risk = (ProgressBar) root.findViewById(R.id.pb_risk);
 
+        cl_loading = (ConstraintLayout) root.findViewById(R.id.cl_loading);
+        cl_data = (ConstraintLayout) root.findViewById(R.id.cl_data);
+
+        pb_loading = (ProgressBar) root.findViewById(R.id.pb_laoding);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rv_info.setLayoutManager(layoutManager);
         rv_info.setAdapter(mListInfoAdapter);
@@ -124,16 +134,28 @@ public class FundFragment extends Fragment implements FundContract.View {
         mListInfoAdapter.replaceData(fund.getScreen().getInfo());
         mListDownInfoAdapter.replaceData(fund.getScreen().getDownInfo());
 
+        cl_loading.setVisibility(View.GONE);
+        cl_data.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void showLoadingFundError() {
+    public void showLoadingError() {
 
     }
 
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    @Override
+    public void setLoadingIndicator() {
+        if(getView() == null){
+            return;
+        }
+
+        cl_loading.setVisibility(View.VISIBLE);
+        cl_data.setVisibility(View.GONE);
     }
 
 }

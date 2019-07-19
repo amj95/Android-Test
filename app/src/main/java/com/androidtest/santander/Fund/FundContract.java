@@ -14,9 +14,11 @@ public interface FundContract {
 
         void showFund(Fund fund);
 
-        void showLoadingFundError();
+        void showLoadingError();
 
         boolean isActive();
+
+        void setLoadingIndicator();
 
     }
 
